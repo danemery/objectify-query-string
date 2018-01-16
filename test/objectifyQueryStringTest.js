@@ -35,6 +35,17 @@ describe('ObjectifyQueryString', () => {
             });
         });
 
+        it('creates an array in the case of duplicate keys', () => {
+            const queryString = '?name=dan&city=seattle&name=john&neighborhood=beacon&height=tall&neighborhood=columbia&neighborhood=capitol';
+
+            assert.deepEqual(objectifier.objectify(queryString), {
+                city: 'seattle',
+                height: 'tall',
+                name: ['dan', 'john'],
+                neighborhood: ['beacon', 'columbia', 'capitol']
+            });
+        });
+
         it('converts query strings with erroneous ampersands', () => {
             const queryString = '?name=dan&&city=seattle&neighborhood=beacon&&&height=tall';
 

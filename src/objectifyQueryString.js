@@ -12,9 +12,10 @@ module.exports = (function() {
 
                 if ((typeof key === 'string' && key !== '') && typeof value === 'string') {
                     if (objectifiedQueryString.hasOwnProperty(key)) {
-                        const initialKeyValue = objectifiedQueryString[key];
+                        if (!(objectifiedQueryString[key] instanceof Array)) {
+                            objectifiedQueryString[key] = [objectifiedQueryString[key]];
+                        }
 
-                        objectifiedQueryString[key] = [initialKeyValue];
                         objectifiedQueryString[key].push(value);
                     } else {
                         objectifiedQueryString[key] = value;
